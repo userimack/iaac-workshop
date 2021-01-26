@@ -1,0 +1,66 @@
+---
+# tasks file for setup_rest_api
+- name: populate /etc/environment
+  lineinfile:
+    insertafter: EOF
+    path: "/etc/environment"
+    state: present
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value}}"
+  with_items: "{{ os_environment }}"
+
+- name: Install Java 8
+  apt:
+    name: ["openjdk-8-jdk", "openjdk-8-jre"]
+    state: present
+
+- name: Ensure Java installation
+  shell: "java -version"
+
+# - name: Set JAVA_HOME
+#   shell:
+#     cmd: |
+#       cat | sudo tee -a /etc/environment <<EOL
+#       JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+#       JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+#       EOL
+
+- name: Set JAVA_HOME and JRE HOME
+  blockinfile:
+    insertafter: EOF
+    path: /etc/environment
+    block: |
+      JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+      JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+- name: Clone Project
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ app_dir }}"
+    force: yes
+    depth: 1
+
+- name: Build Package
+  shell:
+    cmd: "./mvnw clean package"
+    chdir: "{{ app_dir }}"
+
+# - name: Run App
+#   shell:
+#     cmd: "java -jar spring-petclinic-rest-*.jar"
+#     chdir: "{{ app_dir }}/target"
+
+- name: Copy Unit file
+  copy:
+    src: petclinic.service
+    dest: /etc/systemd/system
+
+- name: Start Service
+  systemd:
+    name: petclinic
+    state: started
+    # enabled: yes
+    daemon_reload: yes
+
+- name: make sure Petclinic service is really running
+  command: systemctl is-active petclinic

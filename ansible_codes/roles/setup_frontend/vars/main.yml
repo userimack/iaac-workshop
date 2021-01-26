@@ -1,0 +1,9 @@
+---
+# vars file for setup_frontend
+npm_packages:
+  - "@angular/cli@8.0.3"
+app_dir: "/app/frontend"
+frontend_app_git_url: "https://github.com/userimack/spring-petclinic-angular.git"
+os_environment:
+  - key: BACKEND_URL
+    value : "{{BACKEND_URL}}"

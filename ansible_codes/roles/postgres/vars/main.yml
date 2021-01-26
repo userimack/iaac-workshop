@@ -1,0 +1,9 @@
+---
+# vars file for postgres
+
+# db_user: dbusername
+# db_name: dbname
+# db_password: dbpassword
+db_user: postgres
+db_name: petclinic
+db_password: petclinic

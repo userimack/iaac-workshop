@@ -1,0 +1,14 @@
+---
+# vars file for setup_rest_api
+# repo: "https://github.com/userimack/spring-petclinic-rest.git"
+repo: "https://github.com/spring-petclinic/spring-petclinic-rest.git"
+app_dir: "/app/backend"
+os_environment:
+  - key: DATABASE_HOST
+    value : "{{DATABASE_HOST}}"
+  - key: DATABASE_NAME
+    value : "{{DATABASE_NAME}}"
+  - key: DATABASE_USERNAME
+    value : "{{DATABASE_USERNAME}}"
+  - key: DATABASE_PASSWORD
+    value : "{{DATABASE_PASSWORD}}"

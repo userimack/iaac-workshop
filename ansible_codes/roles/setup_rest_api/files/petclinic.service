@@ -1,0 +1,8 @@
+[Unit]
+Description=Unit file for managing petclinic spring app
+
+[Service]
+ExecStart=/usr/bin/java -jar /app/backend/target/spring-petclinic-rest-2.2.5.jar
+
+[Install]
+WantedBy=multi-user.target

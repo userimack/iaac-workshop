@@ -1,0 +1,21 @@
+---
+# tasks file for setup_node
+- name: Node.js - Get Script
+  get_url:
+    url: https://deb.nodesource.com/setup_{{ node_version }}.x
+    dest: "{{ var_node }}/setup.sh"
+    mode: '0500'
+
+- name: Node.js - Execute installation script
+  shell: "{{ var_node }}/setup.sh"
+  become: yes
+
+- name: Node.js - Remove installation script
+  file:
+    path: "{{ var_node}}/nodejs.sh"
+    state: absent
+
+- name: Node.js - Install Node.js
+  apt:
+    name: nodejs
+    state: latest

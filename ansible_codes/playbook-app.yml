@@ -1,0 +1,19 @@
+---
+- name: Web01
+  hosts: all
+  # hosts: localhost
+  # connection: local
+  become: yes
+  gather_facts: False
+  pre_tasks:
+    # - name: Install python for Ansible
+    #   raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    #   changed_when: False
+    - setup: # aka gather_facts
+
+  roles:
+    - base
+    # - postgres
+    - setup_node
+    - setup_rest_api
+    - setup_frontend

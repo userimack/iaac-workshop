@@ -1,0 +1,4 @@
+---
+# vars file for setup_node
+var_node: "/tmp"
+node_version: "10"
